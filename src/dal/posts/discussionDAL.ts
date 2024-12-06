@@ -13,13 +13,9 @@ export const insertDiscussion = async(data: DiscussionRequestDto) => {
         likesCount: result.likesCount,
         dislikesCount: result.dislikesCount,
         commentsCount: result.commentsCount,
+        createdAt: result.createdAt,
+        updatedAt: result.updatedAt
     }
-    setAuditFields(discussionPost);
 
     return discussionPost;
-}
-
-const setAuditFields = (blogs: DiscussionResponseDto) => {
-    blogs.createdAt = new Date();
-    blogs.updatedAt = new Date();
 }

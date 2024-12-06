@@ -13,18 +13,15 @@ const postSchema: Schema<PostSchema> = new Schema(
     },
     {discriminatorKey: 'type', timestamps: true}
 );
-const blogsSchema: Schema<BlogsSchema> = new Schema();
-
-const discussionSchema: Schema<DiscussionSchema> = new Schema();
 
 export const baseModel = mongoose.model<PostSchema>("Post", postSchema);
 
 export const discussionModel = baseModel.discriminator<DiscussionSchema>(
     "Discussion",
-    discussionSchema
+    new Schema({}, {timestamps: true})
 );
 
 export const blogsModel = baseModel.discriminator<BlogsSchema>(
     "Blogs",
-    blogsSchema
-);
+    new Schema({}, { timestamps: true })
+  );

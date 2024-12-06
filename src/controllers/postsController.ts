@@ -1,9 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { PostTypes } from "../enums/PostTypes";
-import { insertBlogs } from "../dal/posts/blogsDAL";
+import { getPosts, insertBlogs } from "../dal/posts/blogsDAL";
 import { insertDiscussion } from "../dal/posts/discussionDAL";
-
-
 
 export const createNewPost = async(request: Request, response: Response, next: NextFunction) => {
     try {
@@ -25,6 +23,21 @@ export const createNewPost = async(request: Request, response: Response, next: N
     catch(err) {
         response.status(500).json({
             error: err
+        })
+    }
+}
+
+export const getAllPosts = async(request: Request, response: Response, next: NextFunction) => {
+    try {
+        const {type} = request.query;
+
+        const posts = await getPosts(type);
+        response.status(200).json({
+            data: posts
+        });
+    } catch (error) {
+        response.status(500).json({
+            error
         })
     }
 }

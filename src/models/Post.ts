@@ -8,6 +8,8 @@ export interface PostSchema {
     likesCount: number;
     dislikesCount: number;
     commentsCount: number;
+    createdAt: Date,
+    updatedAt: Date
 }
 
 export interface BlogsSchema extends PostSchema, Document {

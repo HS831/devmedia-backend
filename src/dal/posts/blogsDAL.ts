@@ -1,7 +1,7 @@
-import { blogsModel } from "../../data/ServiceContext";
-import { BlogsRequestDto, BlogsResponseDto } from "./Dto/PostsDto";
+import { baseModel, blogsModel, discussionModel } from "../../data/ServiceContext";
+import { BlogsRequestDto, BlogsResponseDto, DiscussionResponseDto } from "./Dto/PostsDto";
 
-export const insertBlogs = async(data: BlogsRequestDto) => {
+export const insertBlogs = async(data: BlogsRequestDto): Promise<BlogsResponseDto> => {
     const result= await blogsModel.create(data);
     
     const blogs: BlogsResponseDto = {
@@ -13,14 +13,22 @@ export const insertBlogs = async(data: BlogsRequestDto) => {
         likesCount: result.likesCount,
         dislikesCount: result.dislikesCount,
         commentsCount: result.commentsCount,
-        isImported: result.isImported
+        isImported: result.isImported,
+        createdAt: result.createdAt,
+        updatedAt: result.updatedAt
     }
-    setAuditFields(blogs);
-
     return blogs;
 }
 
-const setAuditFields = (blogs: BlogsResponseDto) => {
-    blogs.createdAt = new Date();
-    blogs.updatedAt = new Date();
+export const getPosts = async(type: any): Promise<BlogsResponseDto[] | DiscussionResponseDto[]> => {
+    switch(type) {
+        case 'Discussion':
+            const discussions: DiscussionResponseDto[] = await discussionModel.find({});
+            return discussions;
+        case 'Blogs':
+            const blogs: BlogsResponseDto[] = await blogsModel.find({});
+            return blogs;
+    }
+
+    return [];
 }
