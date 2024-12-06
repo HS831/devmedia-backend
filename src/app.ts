@@ -1,8 +1,13 @@
 import express from 'express';
+import cors from 'cors';
+import router from './routes/router';
 
 const app = express();
 
-export default app;
+app.use(cors());
+app.use(express.json());
 
-//pKnqUvH2rWwxQeI4
-//harrymishra831
+app.use('/api/v1/posts', router);
+
+
+export default app;

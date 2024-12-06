@@ -1,6 +1,6 @@
-import { PostTypes } from "../enums/PostTypes";
+import { Document } from "mongoose";
 
-export interface Post {
+export interface PostSchema {
     title: string,
     description: string;
     type: string;
@@ -10,6 +10,10 @@ export interface Post {
     commentsCount: number;
 }
 
-export interface Discussion extends Post {
-    
+export interface BlogsSchema extends PostSchema, Document {
+    isImported: boolean
+}
+
+export interface DiscussionSchema extends PostSchema, Document {
+
 }
